@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MoviesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Actor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Sex" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Precision="0" />
+    <Property Name="Bio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="MovieActor_Map" Relationship="Self.FK_MovieActor_Map_Actor" FromRole="Actor" ToRole="MovieActor_Map" />
+  </EntityType>
+  <EntityType Name="Movie">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ReleaseYear" Type="Int32" />
+    <Property Name="Cast" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Plot" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Poster" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="MovieActor_Map" Relationship="Self.FK_MovieActor_Map_Movie" FromRole="Movie" ToRole="MovieActor_Map" />
+  </EntityType>
+  <EntityType Name="MovieActor_Map">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MovieId" Type="Int64" Nullable="false" />
+    <Property Name="ActorId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Actor" Relationship="Self.FK_MovieActor_Map_Actor" FromRole="MovieActor_Map" ToRole="Actor" />
+    <NavigationProperty Name="Movie" Relationship="Self.FK_MovieActor_Map_Movie" FromRole="MovieActor_Map" ToRole="Movie" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_MovieActor_Map_Actor">
+    <End Role="Actor" Type="Self.Actor" Multiplicity="1" />
+    <End Role="MovieActor_Map" Type="Self.MovieActor_Map" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Actor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MovieActor_Map">
+        <PropertyRef Name="ActorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MovieActor_Map_Movie">
+    <End Role="Movie" Type="Self.Movie" Multiplicity="1" />
+    <End Role="MovieActor_Map" Type="Self.MovieActor_Map" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Movie">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MovieActor_Map">
+        <PropertyRef Name="MovieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MoviesEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Actors" EntityType="Self.Actor" />
+    <EntitySet Name="Movies" EntityType="Self.Movie" />
+    <EntitySet Name="MovieActor_Map" EntityType="Self.MovieActor_Map" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_MovieActor_Map_Actor" Association="Self.FK_MovieActor_Map_Actor">
+      <End Role="Actor" EntitySet="Actors" />
+      <End Role="MovieActor_Map" EntitySet="MovieActor_Map" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MovieActor_Map_Movie" Association="Self.FK_MovieActor_Map_Movie">
+      <End Role="Movie" EntitySet="Movies" />
+      <End Role="MovieActor_Map" EntitySet="MovieActor_Map" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

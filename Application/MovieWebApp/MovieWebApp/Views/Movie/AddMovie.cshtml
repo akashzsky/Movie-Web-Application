@@ -1,0 +1,84 @@
+﻿@*@model MovieWebApp.Controllers.MovieViewModel*@
+@using System.Web.Mvc;
+@{
+    ViewBag.Title = "AddMovie";
+
+}
+
+<h2>AddMovie</h2>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js" type="text/javascript"></script>
+<link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css" />
+<script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    var j = jQuery.noConflict();
+    j(function () {
+        j('#SelActors').multiselect({
+            includeSelectAllOption: true
+        });
+    });
+</script>
+
+@using (Html.BeginForm("AddMovie", "Movie", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+
+
+    <div style="width:500px;height:auto; border:1px solid red; margin-top:50px;margin-left:150px; padding:5px;">
+
+
+        Name  <input name="Name" type="text" /><br /><br />
+        Release Year <input name="Year" type="text" /><br /><br />
+
+        <table>
+            <tr>
+                <td><b>Select Cast</b></td>
+                <td>
+                    @Html.DropDownList("Id", (MultiSelectList)ViewBag.List, new { multiple = "multiple" })
+                   
+                </td>
+              
+            </tr>
+        </table>
+
+        <br /><br /><br />
+        Plot <input name="Plot" type="text" /><br /><br />
+        Poster <input name="file" type="file" />
+
+        <input name="submit" type="submit" value="Submit" /><br />
+    </div>
+}
+
+
+
+@*<form method="post" enctype="multipart/form-data">
+
+        Name  <input name="Name" type="text" /><br /><br />
+        Release Year <input name="Year" type="text" /><br /><br />
+        @*Product Cast <input name="Cast" type="text" /><br /><br />
+        <table>
+            <tr>
+                <td><p>Select Cast Name </p></td>
+            </tr>
+             <tr>
+                <td>
+                    <select id="ActorList" multiple="multiple">
+                        @foreach (var item in Model)
+                        {
+                            <option value=@item.Id>@item.Name</option>
+                        }
+                    </select>
+                </td>
+                <td><input type="button" id="btnSelected" value="Get Selected" /></td>
+            </tr>
+        </table>
+        <br /><br /><br />
+        Plot <input name="Plot" type="text" /><br /><br />
+        Poster <input name="file" type="file" />
+
+        <input name="submit" type="submit" value="Submit" /><br />
+
+    </form>*@

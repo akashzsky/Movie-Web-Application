@@ -1,0 +1,87 @@
+﻿@model IEnumerable<MovieWebApp.Movie>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class="container-fluid">
+    <div class="row" style="padding-top:3em">
+        <div class="col-sm-12" style="text-align:center">
+            <form method="post"></form>
+        </div>
+    </div>
+</div>
+
+@Html.ActionLink("Movie + ", "AddMovie")
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-1" style="padding-top:2em">
+
+        </div>
+        <div class="col-sm-11" style="padding-top:4em">
+            <form method="post">
+                <div class="form-group">
+                    @*<input name="Checkout" type="submit" value="Final Add to Cart" />*@
+                </div>
+                <table class="table">
+                    <tr class="danger">
+                        <th>
+                            @Html.DisplayNameFor(model => model.Poster)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ReleaseYear)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Plot)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Cast)
+                        </th>
+                        @*<th>
+                                <strong>Add to cart</strong>
+                            </th>*@
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <img class="img-responsive img-thumbnail" src="~/Content/Thumbnails/@item.Poster">
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReleaseYear)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Plot)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cast)
+                            </td>
+                            @*<td>
+                                    <input name="chk+@item.Product_ID" type="checkbox"/>
+                                </td>*@
+                            
+
+
+
+                        </tr>
+                    }
+
+
+                </table>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
